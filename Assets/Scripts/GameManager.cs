@@ -4,20 +4,33 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        Physics2D.IgnoreLayerCollision(15, 15, true);
-    }
+	string layerDefault			= "Default";
+	string layerTransparentFX	= "TransparentFX";
+	string layerIgnoreRaycast	= "Ignore Raycast";
+	string layerWater			= "Water";
+	string layerUI				= "UI";
+	string layerPlayer			= "Player";
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    void DisableAllPhysicsLayers()
+	void Awake()
 	{
-        //Physics2D.AllLa
+		DisableAllPhysicsLayers();
+		EnableSpecifiedPhysicsLayers();
 	}
+
+	void DisableAllPhysicsLayers()
+	{
+		for (int i = 0; i < 32; i++)
+		{
+			for (int j = 0; j < 32; j++)
+			{
+				Physics2D.IgnoreLayerCollision(i, j, true);
+			}
+		}
+	}
+
+	void EnableSpecifiedPhysicsLayers()
+	{
+		Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer(layerDefault), LayerMask.NameToLayer(layerTransparentFX), false);
+	}
+
 }
