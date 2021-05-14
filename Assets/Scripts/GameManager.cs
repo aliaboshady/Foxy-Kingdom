@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
 	string layerWater			= "Water";
 	string layerUI				= "UI";
 	string layerPlayer			= "Player";
+	string layerGround			= "Ground";
 
 	void Awake()
 	{
@@ -30,7 +31,7 @@ public class GameManager : MonoBehaviour
 
 	void EnableSpecifiedPhysicsLayers()
 	{
-		Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer(layerDefault), LayerMask.NameToLayer(layerTransparentFX), false);
+		Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer(layerPlayer), LayerMask.NameToLayer(layerGround), false);
 	}
 
 }

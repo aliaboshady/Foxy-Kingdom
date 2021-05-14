@@ -9,8 +9,12 @@ public class PlayerController : MonoBehaviour
 
     Rigidbody2D rigidBody;
     Animator animator;
+    enum PlayerState {idle, running, jumping}
+    PlayerState playerState = PlayerState.idle;
+
     bool canJump = true;
     int facingDirection;
+
     void Start()
     {
         rigidBody = GetComponent<Rigidbody2D>();
@@ -26,13 +30,15 @@ public class PlayerController : MonoBehaviour
 		{
             Jump();
 		}
+
+        playerState = PlayerState.idle;
     }
 
     void Move()
 	{
+        bool isRunning = true;
         float horAxis = Input.GetAxis("Horizontal") * moveSpeed;
 
-        animator.SetBool("isRunning", true);
         if (horAxis > 0)
 		{
             facingDirection = 1;
@@ -43,15 +49,17 @@ public class PlayerController : MonoBehaviour
 		}
 		else
 		{
-            animator.SetBool("isRunning", false);
+            isRunning = false;
         }
-        
+
+        playerState = isRunning ? PlayerState.running : playerState;
+        animator.SetInteger("State", (int)playerState);
         rigidBody.velocity = new Vector2(horAxis, rigidBody.velocity.y);
 	}
 
     void Jump()
 	{
-        rigidBody.velocity += Vector2.up * jumpSpeed;
+        rigidBody.velocity = Vector2.up * jumpSpeed;
 	}
 
     void FaceRightDirection()
