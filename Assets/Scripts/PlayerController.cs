@@ -8,11 +8,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float jumpSpeed = 20f;
 
     Rigidbody2D rigidBody;
+    Animator animator;
     bool canJump = true;
     int facingDirection;
     void Start()
     {
         rigidBody = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
         facingDirection = transform.localScale.x < 0 ? -1 : 1;
     }
 
@@ -29,7 +31,9 @@ public class PlayerController : MonoBehaviour
     void Move()
 	{
         float horAxis = Input.GetAxis("Horizontal") * moveSpeed;
-        if(horAxis > 0)
+
+        animator.SetBool("isRunning", true);
+        if (horAxis > 0)
 		{
             facingDirection = 1;
 		}
@@ -37,6 +41,11 @@ public class PlayerController : MonoBehaviour
 		{
             facingDirection = -1;
 		}
+		else
+		{
+            animator.SetBool("isRunning", false);
+        }
+        
         rigidBody.velocity = new Vector2(horAxis, rigidBody.velocity.y);
 	}
 
