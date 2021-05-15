@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float moveSpeed = 5f;
     [SerializeField] float jumpSpeed = 20f;
     [SerializeField] float gravityFallMultipler = 3f;
+    public float edgeJumpWait = 0.2f;
 
     Rigidbody2D rigidBody;
     Animator animator;
@@ -63,6 +64,7 @@ public class PlayerController : MonoBehaviour
             rigidBody.gravityScale = gravityScale;
             rigidBody.velocity = Vector2.up * jumpSpeed;
             playerState = PlayerState.jumping;
+            canJump = false;
         }
 
         if(rigidBody.velocity.y < -0.01f)
