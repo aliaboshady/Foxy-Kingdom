@@ -6,60 +6,70 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] float moveSpeed = 5f;
     [SerializeField] float jumpSpeed = 20f;
+    [SerializeField] float gravityFallMultipler = 3f;
 
     Rigidbody2D rigidBody;
     Animator animator;
-    enum PlayerState {idle, running, jumping}
-    PlayerState playerState = PlayerState.idle;
+    public enum PlayerState {idle, running, jumping, falling}
+    [HideInInspector] public PlayerState playerState = PlayerState.idle;
 
-    bool canJump = true;
+    [HideInInspector] public bool canJump = true;
     int facingDirection;
+    float gravityScale;
 
     void Start()
     {
         rigidBody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         facingDirection = transform.localScale.x < 0 ? -1 : 1;
+        gravityScale = rigidBody.gravityScale;
     }
 
 	void Update()
 	{
         FaceRightDirection();
         Move();
-        if(canJump && Input.GetKeyDown(KeyCode.Space))
-		{
-            Jump();
-		}
+        Jump();
 
-        playerState = PlayerState.idle;
+        animator.SetInteger("State", (int)playerState);
     }
 
     void Move()
 	{
-        bool isRunning = true;
         float horAxis = Input.GetAxis("Horizontal") * moveSpeed;
 
         if (horAxis > 0)
 		{
             facingDirection = 1;
+            playerState = PlayerState.running;
 		}
         else if(horAxis < 0)
 		{
             facingDirection = -1;
-		}
+            playerState = PlayerState.running;
+        }
 		else
 		{
-            isRunning = false;
+            playerState = PlayerState.idle;
         }
 
-        playerState = isRunning ? PlayerState.running : playerState;
-        animator.SetInteger("State", (int)playerState);
         rigidBody.velocity = new Vector2(horAxis, rigidBody.velocity.y);
 	}
 
     void Jump()
 	{
-        rigidBody.velocity = Vector2.up * jumpSpeed;
+        if (canJump && Input.GetKeyDown(KeyCode.Space))
+        {
+            rigidBody.gravityScale = gravityScale;
+            rigidBody.velocity = Vector2.up * jumpSpeed;
+            playerState = PlayerState.jumping;
+        }
+
+        if(rigidBody.velocity.y < -0.01f)
+		{
+            playerState = PlayerState.falling;
+            rigidBody.gravityScale = gravityScale * gravityFallMultipler;
+        }
 	}
 
     void FaceRightDirection()
