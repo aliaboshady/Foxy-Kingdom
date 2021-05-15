@@ -927,6 +927,7 @@ GameObject:
   - component: {fileID: 2054085877}
   - component: {fileID: 2054085879}
   - component: {fileID: 2054085880}
+  - component: {fileID: 2054085881}
   m_Layer: 9
   m_Name: Frog
   m_TagString: Enemy
@@ -1028,7 +1029,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.03, y: -0.08}
@@ -1044,6 +1045,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.4, y: 1.22}
   m_EdgeRadius: 0
+--- !u!114 &2054085881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2054085876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 231d84a5d0254c842a9d1124982fc0ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerController: {fileID: 5725284420351293303, guid: 6adf972145b0e7542a4dae578acb4b6a, type: 3}
 --- !u!1001 &2060063930
 PrefabInstance:
   m_ObjectHideFlags: 0

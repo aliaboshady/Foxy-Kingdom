@@ -37,10 +37,19 @@ public class PlayerController : MonoBehaviour
         {
             Jump();
         }
-        else if(!canJump && (Input.GetKeyUp(KeyCode.Space) || rigidBody.velocity.y < -0.01f))
+        else if(!canJump)
 		{
-            Fall();
+            if(Input.GetKeyUp(KeyCode.Space) || rigidBody.velocity.y < -0.01f)
+			{
+                Fall();
+            }
+            else if(rigidBody.velocity.y > 0.01f)
+			{
+                playerState = PlayerState.jumping;
+            }
         }
+
+        print(playerState);
 
         animator.SetInteger("State", (int)playerState);
     }
@@ -67,7 +76,7 @@ public class PlayerController : MonoBehaviour
         rigidBody.velocity = new Vector2(horAxis, rigidBody.velocity.y);
 	}
 
-    void Jump()
+    public void Jump()
 	{
         rigidBody.gravityScale = gravityScale;
         rigidBody.velocity = Vector2.up * jumpSpeed;
