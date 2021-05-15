@@ -69,7 +69,7 @@ public class PlayerController : MonoBehaviour
             canJump = false;
         }
 
-        if(rigidBody.velocity.y < -0.01f)
+        if(!canJump && rigidBody.velocity.y < -0.01f)
 		{
             playerState = PlayerState.falling;
             rigidBody.gravityScale = gravityScale * gravityFallMultipler;
@@ -80,4 +80,5 @@ public class PlayerController : MonoBehaviour
 	{
         transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x) * facingDirection, transform.localScale.y, transform.localScale.z);
 	}
+
 }

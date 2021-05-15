@@ -27,6 +27,7 @@ public class GroundChecker : MonoBehaviour
 			if (edgeJumpWaitPassed >= edgeJumpWait)
 			{
 				playerController.canJump = false;
+				playerController.playerState = PlayerController.PlayerState.jumping;
 			}
 		}
 	}
