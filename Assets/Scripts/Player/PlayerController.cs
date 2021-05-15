@@ -8,12 +8,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float jumpSpeed = 20f;
     [SerializeField] float gravityJumpDivider = 5f;
     [SerializeField] float gravityFallMultipler = 3f;
-    [SerializeField] float canMoveWait = 1f;
+    [SerializeField] float hurtWait = 1f;
     public float edgeJumpWait = 0.2f;
 
     Rigidbody2D rigidBody;
     Animator animator;
-    public enum PlayerState {idle, running, jumping, falling}
+    public enum PlayerState {idle, running, jumping, falling, hurt}
     [HideInInspector] public PlayerState playerState = PlayerState.idle;
 
     [HideInInspector] public bool canJump = false;
@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public bool increasedGravity = false;
     int facingDirection;
     float gravityScale;
-    float canMoveWaitPassed;
+    float hurtWaitPassed;
 
     void Start()
     {
@@ -35,40 +35,44 @@ public class PlayerController : MonoBehaviour
 	void Update()
 	{
         FaceRightDirection();
-		if (canMove)
-		{
-            Move();
-        }
 
-        if (canJump && Input.GetKeyDown(KeyCode.Space))
+        if (playerState == PlayerState.hurt)
         {
-            Jump();
+            ResetHurtAfterTime();
+            print("Hurt");
         }
-        else if(!canJump)
-		{
-            if(Input.GetKeyUp(KeyCode.Space) && !increasedGravity)
-			{
-                IncreaseGravity();
+        else
+        {
+            hurtWaitPassed = 0;
+
+
+            if (canMove)
+            {
+                Move();
             }
-            if (rigidBody.velocity.y < -0.01f)
-			{
-                Fall();
+
+            if (canJump && Input.GetKeyDown(KeyCode.Space))
+            {
+                Jump();
             }
-            else if(rigidBody.velocity.y > 0.01f)
-			{
-                playerState = PlayerState.jumping;
+            else if (!canJump)
+            {
+                if (Input.GetKeyUp(KeyCode.Space) && !increasedGravity)
+                {
+                    IncreaseGravity();
+                }
+                if (rigidBody.velocity.y < -0.01f)
+                {
+                    Fall();
+                }
+                else if (rigidBody.velocity.y > 0.01f)
+                {
+                    playerState = PlayerState.jumping;
+                }
             }
         }
 
-		if (!canMove)
-		{
-            ResetCanMoveAfterTime();
-		}
-		else
-		{
-            canMoveWaitPassed = 0;
-        }
-
+        print(playerState);
         animator.SetInteger("State", (int)playerState);
     }
 
@@ -94,12 +98,17 @@ public class PlayerController : MonoBehaviour
         rigidBody.velocity = new Vector2(horAxis, rigidBody.velocity.y);
 	}
 
-    void ResetCanMoveAfterTime()
+    void ResetHurtAfterTime()
 	{
-        canMoveWaitPassed += Time.deltaTime;
-        if(canMoveWaitPassed >= canMoveWait)
+        hurtWaitPassed += Time.deltaTime;
+        if(hurtWaitPassed >= hurtWait)
 		{
-            canMove = true;
+            playerState = PlayerState.idle;
+
+   //         if (playerState == PlayerState.hurt)
+			//{
+   //             playerState = PlayerState.idle;
+			//}
         }
 	}
 
@@ -135,5 +144,10 @@ public class PlayerController : MonoBehaviour
 	{
         transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x) * facingDirection, transform.localScale.y, transform.localScale.z);
 	}
+
+    public void Hurt()
+	{
+        playerState = PlayerState.hurt;
+    }
 
 }
