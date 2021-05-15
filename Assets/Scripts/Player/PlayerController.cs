@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] float moveSpeed = 5f;
     [SerializeField] float jumpSpeed = 20f;
+    [SerializeField] float gravityJumpDivider = 5f;
     [SerializeField] float gravityFallMultipler = 3f;
     public float edgeJumpWait = 0.2f;
 
@@ -23,6 +24,7 @@ public class PlayerController : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         facingDirection = transform.localScale.x < 0 ? -1 : 1;
+        rigidBody.gravityScale = jumpSpeed / gravityJumpDivider;
         gravityScale = rigidBody.gravityScale;
     }
 
