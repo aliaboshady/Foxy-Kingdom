@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class FrogController : MonoBehaviour
 {
-	[SerializeField] float explosionForce = 10f;
+	[SerializeField] float explosionForceVertical = 10f;
+	[SerializeField] float hitForceHorizontal = 5f;
+	[SerializeField] float hitForceVertical = 10f;
 	PlayerController playerController;
 
 	private void Start()
@@ -18,12 +20,13 @@ public class FrogController : MonoBehaviour
 		{
 			if (playerController.playerState == PlayerController.PlayerState.falling)
 			{
-				playerController.Jump(explosionForce);
+				playerController.Jump(explosionForceVertical);
 				Destroy(gameObject);
 			}
 			else
 			{
-				print("Damage Player");
+				playerController.canMove = false;
+				playerController.Jump(hitForceVertical, hitForceHorizontal);
 			}
 		}
 	}

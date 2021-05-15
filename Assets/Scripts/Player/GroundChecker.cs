@@ -37,6 +37,7 @@ public class GroundChecker : MonoBehaviour
 		if (collision.tag == "Ground")
 		{
 			playerController.canJump = true;
+			playerController.canMove = true;
 			playerController.playerState = PlayerController.PlayerState.idle;
 			isFalling = false;
 			edgeJumpWaitPassed = 0;

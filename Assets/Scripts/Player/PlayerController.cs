@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float jumpSpeed = 20f;
     [SerializeField] float gravityJumpDivider = 5f;
     [SerializeField] float gravityFallMultipler = 3f;
+    [SerializeField] float canMoveWait = 1f;
     public float edgeJumpWait = 0.2f;
 
     Rigidbody2D rigidBody;
@@ -15,10 +16,12 @@ public class PlayerController : MonoBehaviour
     public enum PlayerState {idle, running, jumping, falling}
     [HideInInspector] public PlayerState playerState = PlayerState.idle;
 
-    [HideInInspector] public bool canJump = true;
+    [HideInInspector] public bool canJump = false;
+    [HideInInspector] public bool canMove = true;
     [HideInInspector] public bool increasedGravity = false;
     int facingDirection;
     float gravityScale;
+    float canMoveWaitPassed;
 
     void Start()
     {
@@ -32,7 +35,10 @@ public class PlayerController : MonoBehaviour
 	void Update()
 	{
         FaceRightDirection();
-        Move();
+		if (canMove)
+		{
+            Move();
+        }
 
         if (canJump && Input.GetKeyDown(KeyCode.Space))
         {
@@ -52,6 +58,15 @@ public class PlayerController : MonoBehaviour
 			{
                 playerState = PlayerState.jumping;
             }
+        }
+
+		if (!canMove)
+		{
+            ResetCanMoveAfterTime();
+		}
+		else
+		{
+            canMoveWaitPassed = 0;
         }
 
         animator.SetInteger("State", (int)playerState);
@@ -79,11 +94,22 @@ public class PlayerController : MonoBehaviour
         rigidBody.velocity = new Vector2(horAxis, rigidBody.velocity.y);
 	}
 
-    public void Jump(float jumpSpeedInput = -1)
+    void ResetCanMoveAfterTime()
+	{
+        canMoveWaitPassed += Time.deltaTime;
+        if(canMoveWaitPassed >= canMoveWait)
+		{
+            canMove = true;
+        }
+	}
+
+    public void Jump(float jumpSpeedVertical = -1, float jumpSpeedHorizontal = -1)
 	{
         ResetGravity();
-        jumpSpeedInput = jumpSpeedInput == -1 ? jumpSpeed : jumpSpeedInput;
-        rigidBody.velocity = Vector2.up * jumpSpeedInput;
+        jumpSpeedVertical = jumpSpeedVertical == -1 ? jumpSpeed : jumpSpeedVertical;
+        jumpSpeedHorizontal = jumpSpeedHorizontal == -1 ? 0 : jumpSpeedHorizontal;
+        rigidBody.velocity = new Vector2(jumpSpeedHorizontal, jumpSpeedVertical);
+
         playerState = PlayerState.jumping;
         canJump = false;
     }
