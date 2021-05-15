@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
 	string layerUI				= "UI";
 	string layerPlayer			= "Player";
 	string layerGround			= "Ground";
+	string layerCollectable		= "Collectable";
 
 	void Awake()
 	{
@@ -31,7 +32,13 @@ public class GameManager : MonoBehaviour
 
 	void EnableSpecifiedPhysicsLayers()
 	{
-		Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer(layerPlayer), LayerMask.NameToLayer(layerGround), false);
+		LayersCollide(layerPlayer, layerGround);
+		LayersCollide(layerPlayer, layerCollectable);
+	}
+
+	void LayersCollide(string layer1, string layer2)
+	{
+		Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer(layer1), LayerMask.NameToLayer(layer2), false);
 	}
 
 }

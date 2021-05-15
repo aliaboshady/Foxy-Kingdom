@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Cherry
   layers:
   - Default
   - TransparentFX
@@ -13,7 +14,7 @@ TagManager:
   - UI
   - Player
   - Ground
-  - 
+  - Collectable
   - 
   - 
   - 
@@ -46,6 +47,9 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 3688657349
+    locked: 0
+  - name: Collectable
+    uniqueID: 1711338139
     locked: 0
   - name: Foreground
     uniqueID: 3018247493
