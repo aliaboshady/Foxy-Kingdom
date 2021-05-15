@@ -32,7 +32,16 @@ public class PlayerController : MonoBehaviour
 	{
         FaceRightDirection();
         Move();
-        Jump();
+
+        if (canJump && Input.GetKeyDown(KeyCode.Space))
+        {
+            Jump();
+        }
+
+        if (!canJump && rigidBody.velocity.y < -0.01f)
+        {
+            Fall();
+        }
 
         animator.SetInteger("State", (int)playerState);
     }
@@ -61,20 +70,17 @@ public class PlayerController : MonoBehaviour
 
     void Jump()
 	{
-        if (canJump && Input.GetKeyDown(KeyCode.Space))
-        {
-            rigidBody.gravityScale = gravityScale;
-            rigidBody.velocity = Vector2.up * jumpSpeed;
-            playerState = PlayerState.jumping;
-            canJump = false;
-        }
+        rigidBody.gravityScale = gravityScale;
+        rigidBody.velocity = Vector2.up * jumpSpeed;
+        playerState = PlayerState.jumping;
+        canJump = false;
+    }
 
-        if(!canJump && rigidBody.velocity.y < -0.01f)
-		{
-            playerState = PlayerState.falling;
-            rigidBody.gravityScale = gravityScale * gravityFallMultipler;
-        }
-	}
+    void Fall()
+	{
+        playerState = PlayerState.falling;
+        rigidBody.gravityScale = gravityScale * gravityFallMultipler;
+    }
 
     void FaceRightDirection()
 	{

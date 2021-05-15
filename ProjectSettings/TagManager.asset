@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Cherry
+  - Frog
+  - Enemy
+  - Collectable
   layers:
   - Default
   - TransparentFX
@@ -15,7 +18,7 @@ TagManager:
   - Player
   - Ground
   - Collectable
-  - 
+  - Enemy
   - 
   - 
   - 
@@ -47,6 +50,9 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 3688657349
+    locked: 0
+  - name: Enemy
+    uniqueID: 3233513807
     locked: 0
   - name: Collectable
     uniqueID: 1711338139

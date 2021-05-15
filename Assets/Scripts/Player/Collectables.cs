@@ -8,10 +8,13 @@ public class Collectables : MonoBehaviour
 	public int cherriesCount;
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
-		if(collision.tag == "Cherry")
+		if(collision.tag == "Collectable")
 		{
-			cherriesCount += 1;
-			hudManager.UpdateCherries(cherriesCount);
+			if(collision.name.Contains("Cherry"))
+			{
+				cherriesCount += 1;
+				hudManager.UpdateCherries(cherriesCount);
+			}
 		}
 	}
 }

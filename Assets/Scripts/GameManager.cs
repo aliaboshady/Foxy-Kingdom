@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
 	string layerPlayer			= "Player";
 	string layerGround			= "Ground";
 	string layerCollectable		= "Collectable";
+	string layerEnemy			= "Enemy";
 
 	void Awake()
 	{
@@ -34,6 +35,7 @@ public class GameManager : MonoBehaviour
 	{
 		LayersCollide(layerPlayer, layerGround);
 		LayersCollide(layerPlayer, layerCollectable);
+		LayersCollide(layerPlayer, layerEnemy);
 	}
 
 	void LayersCollide(string layer1, string layer2)
