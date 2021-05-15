@@ -21,7 +21,7 @@ public class GroundChecker : MonoBehaviour
 
 	void EdgeJump()
 	{
-		if (isFalling)
+		if (isFalling && playerController.playerState != PlayerController.PlayerState.hurt)
 		{
 			edgeJumpWaitPassed += Time.deltaTime;
 			if (edgeJumpWaitPassed >= edgeJumpWait)

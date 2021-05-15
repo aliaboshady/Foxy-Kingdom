@@ -25,9 +25,9 @@ public class FrogController : MonoBehaviour
 			}
 			else
 			{
-				//playerController.canMove = false;
-				
-				playerController.Jump(hitForceVertical, hitForceHorizontal);
+				int direction = playerController.gameObject.transform.position.x < transform.position.x ? -1 : 1;
+				playerController.canMove = false;
+				playerController.Jump(hitForceVertical, hitForceHorizontal * direction);
 				playerController.playerState = PlayerController.PlayerState.hurt;
 			}
 		}

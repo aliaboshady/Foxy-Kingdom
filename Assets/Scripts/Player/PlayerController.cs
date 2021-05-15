@@ -30,6 +30,8 @@ public class PlayerController : MonoBehaviour
         facingDirection = transform.localScale.x < 0 ? -1 : 1;
         rigidBody.gravityScale = jumpSpeed / gravityJumpDivider;
         gravityScale = rigidBody.gravityScale;
+
+        playerState = PlayerState.hurt;
     }
 
 	void Update()
@@ -39,12 +41,10 @@ public class PlayerController : MonoBehaviour
         if (playerState == PlayerState.hurt)
         {
             ResetHurtAfterTime();
-            print("Hurt");
         }
         else
         {
             hurtWaitPassed = 0;
-
 
             if (canMove)
             {
@@ -104,11 +104,7 @@ public class PlayerController : MonoBehaviour
         if(hurtWaitPassed >= hurtWait)
 		{
             playerState = PlayerState.idle;
-
-   //         if (playerState == PlayerState.hurt)
-			//{
-   //             playerState = PlayerState.idle;
-			//}
+            canMove = true;
         }
 	}
 
@@ -144,10 +140,5 @@ public class PlayerController : MonoBehaviour
 	{
         transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x) * facingDirection, transform.localScale.y, transform.localScale.z);
 	}
-
-    public void Hurt()
-	{
-        playerState = PlayerState.hurt;
-    }
 
 }
