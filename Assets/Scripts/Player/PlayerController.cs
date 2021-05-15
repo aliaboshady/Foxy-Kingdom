@@ -37,9 +37,8 @@ public class PlayerController : MonoBehaviour
         {
             Jump();
         }
-
-        if (!canJump && rigidBody.velocity.y < -0.01f)
-        {
+        else if(!canJump && (Input.GetKeyUp(KeyCode.Space) || rigidBody.velocity.y < -0.01f))
+		{
             Fall();
         }
 
