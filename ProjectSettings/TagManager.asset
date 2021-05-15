@@ -8,6 +8,7 @@ TagManager:
   - Frog
   - Enemy
   - Collectable
+  - Ground
   layers:
   - Default
   - TransparentFX

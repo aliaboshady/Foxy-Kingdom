@@ -34,14 +34,22 @@ public class GroundChecker : MonoBehaviour
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
-		playerController.canJump = true;
-		playerController.playerState = PlayerController.PlayerState.idle;
-		isFalling = false;
-		edgeJumpWaitPassed = 0;
+		if (collision.tag == "Ground")
+		{
+			playerController.canJump = true;
+			playerController.playerState = PlayerController.PlayerState.idle;
+			isFalling = false;
+			edgeJumpWaitPassed = 0;
+		}
 	}
 
 	private void OnTriggerExit2D(Collider2D collision)
 	{
-		isFalling = true;
+		if (collision.tag == "Ground")
+		{
+			isFalling = true;
+			playerController.ResetGravity();
+			playerController.increasedGravity = false;
+		}
 	}
 }

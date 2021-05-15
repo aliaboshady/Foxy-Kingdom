@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public PlayerState playerState = PlayerState.idle;
 
     [HideInInspector] public bool canJump = true;
+    [HideInInspector] public bool increasedGravity = false;
     int facingDirection;
     float gravityScale;
 
@@ -39,7 +40,11 @@ public class PlayerController : MonoBehaviour
         }
         else if(!canJump)
 		{
-            if(Input.GetKeyUp(KeyCode.Space) || rigidBody.velocity.y < -0.01f)
+            if(Input.GetKeyUp(KeyCode.Space) && !increasedGravity)
+			{
+                IncreaseGravity();
+            }
+            if (rigidBody.velocity.y < -0.01f)
 			{
                 Fall();
             }
@@ -48,8 +53,6 @@ public class PlayerController : MonoBehaviour
                 playerState = PlayerState.jumping;
             }
         }
-
-        print(playerState);
 
         animator.SetInteger("State", (int)playerState);
     }
@@ -76,10 +79,11 @@ public class PlayerController : MonoBehaviour
         rigidBody.velocity = new Vector2(horAxis, rigidBody.velocity.y);
 	}
 
-    public void Jump()
+    public void Jump(float jumpSpeedInput = -1)
 	{
-        rigidBody.gravityScale = gravityScale;
-        rigidBody.velocity = Vector2.up * jumpSpeed;
+        ResetGravity();
+        jumpSpeedInput = jumpSpeedInput == -1 ? jumpSpeed : jumpSpeedInput;
+        rigidBody.velocity = Vector2.up * jumpSpeedInput;
         playerState = PlayerState.jumping;
         canJump = false;
     }
@@ -87,10 +91,21 @@ public class PlayerController : MonoBehaviour
     void Fall()
 	{
         playerState = PlayerState.falling;
+        IncreaseGravity();
+        increasedGravity = true;
+    }
+
+    void IncreaseGravity()
+	{
         rigidBody.gravityScale = gravityScale * gravityFallMultipler;
     }
 
-    void FaceRightDirection()
+	public void ResetGravity()
+	{
+        rigidBody.gravityScale = gravityScale;
+    }
+
+	void FaceRightDirection()
 	{
         transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x) * facingDirection, transform.localScale.y, transform.localScale.z);
 	}
