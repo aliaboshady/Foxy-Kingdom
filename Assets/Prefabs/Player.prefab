@@ -170,9 +170,12 @@ MonoBehaviour:
   jumpSpeed: 20
   gravityJumpDivider: 5
   gravityFallMultipler: 3
+  hurtWait: 0.75
   edgeJumpWait: 0.1
   playerState: 0
-  canJump: 1
+  canJump: 0
+  canMove: 1
+  increasedGravity: 0
 --- !u!114 &440535194
 MonoBehaviour:
   m_ObjectHideFlags: 0

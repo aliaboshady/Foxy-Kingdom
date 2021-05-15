@@ -142,6 +142,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 231d84a5d0254c842a9d1124982fc0ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosionForceVertical: 10
+  explosionForceVertical: 15
   hitForceHorizontal: 5
   hitForceVertical: 10

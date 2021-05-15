@@ -1013,14 +1013,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 5725284420351293303, guid: 6adf972145b0e7542a4dae578acb4b6a, type: 3}
-      propertyPath: canJump
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5725284420351293303, guid: 6adf972145b0e7542a4dae578acb4b6a, type: 3}
-      propertyPath: hurtWait
-      value: 0.25
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6adf972145b0e7542a4dae578acb4b6a, type: 3}
 --- !u!1001 &5856135370844436923
@@ -1078,10 +1070,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Level
       objectReference: {fileID: 0}
-    - target: {fileID: 5856135371278044000, guid: ff94488c6b6b5bf47bd0740f8fcab79f, type: 3}
-      propertyPath: m_TagString
-      value: Ground
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff94488c6b6b5bf47bd0740f8fcab79f, type: 3}
 --- !u!1001 &8968047365063982384
@@ -1138,10 +1126,6 @@ PrefabInstance:
     - target: {fileID: 8968047364366066118, guid: 7013c921da986bb4ebb6e987d4b61ce4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8968047364366066121, guid: 7013c921da986bb4ebb6e987d4b61ce4, type: 3}
-      propertyPath: hitForceHorizontal
-      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7013c921da986bb4ebb6e987d4b61ce4, type: 3}

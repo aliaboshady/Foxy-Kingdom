@@ -72,7 +72,6 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        print(playerState);
         animator.SetInteger("State", (int)playerState);
     }
 

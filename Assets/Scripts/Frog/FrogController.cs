@@ -21,7 +21,7 @@ public class FrogController : MonoBehaviour
 			if (playerController.playerState == PlayerController.PlayerState.falling)
 			{
 				playerController.Jump(explosionForceVertical);
-				//Destroy(gameObject);
+				Destroy(gameObject);
 			}
 			else
 			{
