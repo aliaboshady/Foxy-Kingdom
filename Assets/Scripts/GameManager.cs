@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
 		LayersCollide(layerPlayer, layerGround);
 		LayersCollide(layerPlayer, layerCollectable);
 		LayersCollide(layerPlayer, layerEnemy);
+		LayersCollide(layerGround, layerEnemy);
 	}
 
 	void LayersCollide(string layer1, string layer2)
