@@ -12,11 +12,15 @@ public class FrogController : MonoBehaviour
 	[SerializeField] float jumpWait = 1f;
 	[SerializeField] float jumpEdgeWait = 3f;
 	[SerializeField] float fallingGravity = 3f;
+	[SerializeField] float rightEdgeX;
+	[SerializeField] float leftEdgeX;
 
 	float jumpWaitPassed = 0f;
 	int direction;
 	bool canJump = true;
+	bool nextJumpDirectionChange = false;
 	float originalGravity;
+	float originalJumpWait;
 
 	PlayerController playerController;
 	Rigidbody2D rigidBody;
@@ -32,6 +36,7 @@ public class FrogController : MonoBehaviour
 		rigidBody = GetComponent<Rigidbody2D>();
 		originalGravity = rigidBody.gravityScale;
 		direction = transform.localScale.x < 0 ? 1 : -1;
+		originalJumpWait = jumpWait;
 	}
 
 	private void Update()
@@ -47,15 +52,22 @@ public class FrogController : MonoBehaviour
 			{
 				canJump = true;
 				jumpWaitPassed = 0;
+				jumpWait = originalJumpWait;
 			}
 		}
 
+		AdjustEdgesCap();
 		AdjustGravity();
 		AdjustAnimationState();
 	}
 
 	void Jump()
 	{
+		if (nextJumpDirectionChange)
+		{
+			nextJumpDirectionChange = false;
+			transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x) * -direction, transform.localScale.y, 1);
+		}
 		frogState = FrogState.jumping;
 		rigidBody.gravityScale = originalGravity;
 		rigidBody.velocity = new Vector2(horizontalJump * direction, verticalJump);
@@ -68,6 +80,24 @@ public class FrogController : MonoBehaviour
 		{
 			frogState = FrogState.falling;
 			rigidBody.gravityScale = fallingGravity;
+		}
+	}
+
+	void AdjustEdgesCap()
+	{
+		if(transform.position.x < leftEdgeX)
+		{
+			transform.position = new Vector3(leftEdgeX, transform.position.y, 0);
+			nextJumpDirectionChange = true;
+			direction = 1;
+			jumpWait = jumpEdgeWait;
+		}
+		else if (transform.position.x > rightEdgeX)
+		{
+			transform.position = new Vector3(rightEdgeX, transform.position.y, 0);
+			nextJumpDirectionChange = true;
+			direction = -1;
+			jumpWait = jumpEdgeWait;
 		}
 	}
 
@@ -98,6 +128,13 @@ public class FrogController : MonoBehaviour
 				playerController.playerState = PlayerController.PlayerState.hurt;
 			}
 		}
+	}
+
+	private void OnDrawGizmos()
+	{
+		Gizmos.color = Color.green;
+		Gizmos.DrawLine(new Vector3(leftEdgeX, transform.position.y - 5), new Vector3(leftEdgeX, transform.position.y + 5));
+		Gizmos.DrawLine(new Vector3(rightEdgeX, transform.position.y - 5), new Vector3(rightEdgeX, transform.position.y + 5));
 	}
 
 }

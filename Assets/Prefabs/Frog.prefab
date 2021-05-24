@@ -170,4 +170,7 @@ MonoBehaviour:
   verticalJump: 4
   horizontalJump: 5
   jumpWait: 1
+  jumpEdgeWait: 3
   fallingGravity: 3
+  rightEdgeX: 0
+  leftEdgeX: 0
