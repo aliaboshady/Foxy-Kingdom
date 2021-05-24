@@ -111,6 +111,11 @@ public class FrogController : MonoBehaviour
 		animator.SetInteger("State", (int)frogState);
 	}
 
+	void Die()
+	{
+		Destroy(gameObject);
+	}
+
 	private void OnCollisionEnter2D(Collision2D collision)
 	{
 		if (collision.transform.tag == "Player")
@@ -118,7 +123,7 @@ public class FrogController : MonoBehaviour
 			if (playerController.playerState == PlayerController.PlayerState.falling)
 			{
 				playerController.Jump(explosionForceVertical);
-				Destroy(gameObject);
+				animator.SetTrigger("Death");
 			}
 			else
 			{
