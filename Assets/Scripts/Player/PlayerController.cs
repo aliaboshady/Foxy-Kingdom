@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour
         rigidBody.gravityScale = jumpSpeed / gravityJumpDivider;
         gravityScale = rigidBody.gravityScale;
 
-        playerState = PlayerState.hurt;
+        playerState = PlayerState.idle;
     }
 
 	void Update()

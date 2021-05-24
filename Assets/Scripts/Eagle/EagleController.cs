@@ -4,15 +4,40 @@ using UnityEngine;
 
 public class EagleController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+	[SerializeField] float explosionForceVertical = 15f;
+	[SerializeField] float hitForceHorizontal = 5f;
+	[SerializeField] float hitForceVertical = 10f;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+	PlayerController playerController;
+	Animator animator;
+
+	private void Start()
+	{
+		animator = GetComponent<Animator>();
+		playerController = FindObjectOfType<PlayerController>();
+	}
+
+	void Die()
+	{
+		Destroy(gameObject);
+	}
+
+	private void OnCollisionEnter2D(Collision2D collision)
+	{
+		if (collision.transform.tag == "Player")
+		{
+			if (playerController.playerState == PlayerController.PlayerState.falling)
+			{
+				playerController.Jump(explosionForceVertical);
+				animator.SetTrigger("Death");
+			}
+			else
+			{
+				int direction = playerController.gameObject.transform.position.x < transform.position.x ? -1 : 1;
+				playerController.canMove = false;
+				playerController.Jump(hitForceVertical, hitForceHorizontal * direction);
+				playerController.playerState = PlayerController.PlayerState.hurt;
+			}
+		}
+	}
 }
