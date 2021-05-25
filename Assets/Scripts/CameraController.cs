@@ -9,6 +9,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] Transform offsetStartX;
     [SerializeField] float offsetSpeed = 5f;
     [SerializeField] float offsetLimitY = 5f;
+    [SerializeField] Canvas HUD;
     public static float offsetY = 0f;
     
     void Update()
@@ -21,6 +22,7 @@ public class CameraController : MonoBehaviour
         if(transform.position.x > offsetStartX.position.x && transform.position.y <= playerTransform.position.y + offsetLimitY)
 		{
             offsetY += offsetSpeed * Time.deltaTime;
+            HUD.gameObject.SetActive(false);
 		}
     }
 }
