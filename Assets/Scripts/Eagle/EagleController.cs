@@ -14,6 +14,7 @@ public class EagleController : MonoBehaviour
 	private void Start()
 	{
 		animator = GetComponent<Animator>();
+		animator.Play("Flying", -1, Random.Range(0.0f, 1.0f));
 		playerController = FindObjectOfType<PlayerController>();
 	}
 
