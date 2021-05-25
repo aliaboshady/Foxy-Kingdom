@@ -7,16 +7,15 @@ public class HUDManager : MonoBehaviour
 {
     [SerializeField] GameObject player;
     Text cherriesText;
-    string textConst = "Cherries: ";
 
     void Start()
     {
-        cherriesText = transform.Find("Cherries").GetComponent<Text>();
+        cherriesText = transform.Find("Cherry Count").GetComponent<Text>();
         UpdateCherries(0);
     }
 
     public void UpdateCherries(int cherriesTotal)
     {
-        cherriesText.text = textConst + cherriesTotal;
+        cherriesText.text = cherriesTotal.ToString();
     }
 }

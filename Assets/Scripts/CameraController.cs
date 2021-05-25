@@ -5,9 +5,22 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     [SerializeField] Transform playerTransform;
+    [SerializeField] Transform limitX;
+    [SerializeField] Transform offsetStartX;
+    [SerializeField] float offsetSpeed = 5f;
+    [SerializeField] float offsetLimitY = 5f;
+    public static float offsetY = 0f;
     
     void Update()
     {
-        transform.position = new Vector3(playerTransform.position.x, playerTransform.position.y, transform.position.z);
+        transform.position = new Vector3(playerTransform.position.x, playerTransform.position.y + offsetY, transform.position.z);
+        if(transform.position.x > limitX.position.x)
+		{
+            transform.position = new Vector3(limitX.position.x, playerTransform.position.y + offsetY, transform.position.z);
+        }
+        if(transform.position.x > offsetStartX.position.x && transform.position.y <= playerTransform.position.y + offsetLimitY)
+		{
+            offsetY += offsetSpeed * Time.deltaTime;
+		}
     }
 }

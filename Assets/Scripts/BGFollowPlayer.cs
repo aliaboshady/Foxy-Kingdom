@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class BGFollowPlayer : MonoBehaviour
 {
-    [SerializeField] Transform playerTransform;
+    [SerializeField] Transform targetTransform;
     
-    void Update()
+    void LateUpdate()
     {
-        transform.position = playerTransform.position;
+        transform.position = new Vector3(targetTransform.position.x, targetTransform.position.y, 0);
     }
 }

@@ -5,8 +5,7 @@ using UnityEngine.Tilemaps;
 
 public class SunDown : MonoBehaviour
 {
-    [SerializeField] SpriteRenderer tile1;
-    [SerializeField] SpriteRenderer tile2;
+    [SerializeField] SpriteRenderer[] tiles;
     [SerializeField] Tilemap tileMap;
     [SerializeField] float sunDownSpeed = 0.05f;
     [SerializeField] float sunDownLimit = 0f;
@@ -19,8 +18,11 @@ public class SunDown : MonoBehaviour
 		if (canSunDown && currColor > sunDownLimit)
 		{
             currColor -= sunDownSpeed * Time.deltaTime;
-            tile1.color = new Vector4(currColor, currColor, currColor, 1);
-            tile2.color = new Vector4(currColor, currColor, currColor, 1);
+			for (int i = 0; i < tiles.Length; i++)
+			{
+                tiles[i].color = new Vector4(currColor, currColor, currColor, 1);
+            }
+            
             tileMap.color = new Vector4(currColor, currColor, currColor, 1);
         }
     }
