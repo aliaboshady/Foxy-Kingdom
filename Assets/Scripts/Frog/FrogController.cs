@@ -123,6 +123,7 @@ public class FrogController : MonoBehaviour
 			if (playerController.playerState == PlayerController.PlayerState.falling)
 			{
 				rigidBody.velocity = Vector2.zero;
+				rigidBody.bodyType = RigidbodyType2D.Static;
 				playerController.Jump(explosionForceVertical);
 				animator.SetTrigger("Death");
 			}
